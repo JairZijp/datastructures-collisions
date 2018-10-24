@@ -29,17 +29,19 @@ public class HighScorePlayerFinderTest {
     Player nearlyHeadlessNick;
     Player dumbledore;
     Player harry;
+    Player harry2;
     Player james;
     Player lily;
     Player voldemort;
 
     @Before
     public final void setup() {
-        highscores = new HighScorePlayerFinder(7);
+        highscores = new HighScorePlayerFinder(8);
 
         nearlyHeadlessNick = new Player("Nicholas", "de Mimsy-Porpington", 95);
         dumbledore = new Player("Albus", "Dumbledore", nearlyHeadlessNick.getHighScore() * 1000);
         harry = new Player("Harry", "Potter", dumbledore.getHighScore() + 1000);
+        harry2 = new Player("Harry", "Potter", dumbledore.getHighScore() + 1000);
         james = new Player("James", "Potter", harry.getHighScore() - 4000);
         lily = new Player("Lily", "Potter", harry.getHighScore() - 4000);
         voldemort = new Player("polygene", "lubricants", harry.getHighScore() - 10);
@@ -47,6 +49,7 @@ public class HighScorePlayerFinderTest {
         highscores.add(nearlyHeadlessNick);
         highscores.add(dumbledore);
         highscores.add(harry);
+        highscores.add(harry2);
         highscores.add(james);
         highscores.add(lily);
         highscores.add(voldemort);
@@ -59,13 +62,20 @@ public class HighScorePlayerFinderTest {
         assertEquals(1, albusses.size());
         assertEquals(dumbledore, albusses.get(0));
     }
+    
+    @Test
+    public final void linearTest() {
+        List<Player> harrys = highscores.findPlayer("Harry", null);
+        
+        assertEquals(2, harrys.size());
+        assertEquals(harry2, harrys.get(1));
+    }
 
     @Test
     public final void thePottersArePresent() {
+        System.out.print(highscores);
         List<Player> potters = highscores.findPlayer(null, "Potter");
 
-        System.out.print("potters" + potters);
-        
         assertEquals(3, potters.size());
         assertTrue(potters.contains(harry));
         assertTrue(potters.contains(james));
@@ -92,5 +102,6 @@ public class HighScorePlayerFinderTest {
             highscores.add(new Player(firstName, lastName, randomizer.nextInt(1000)));
         }
     }
+    
 
 }
