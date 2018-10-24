@@ -55,7 +55,7 @@ public class HighScorePlayerFinderTest {
     @Test
     public final void albusIsUnique() {
         List<Player> albusses = highscores.findPlayer("Albus", null);
-
+        
         assertEquals(1, albusses.size());
         assertEquals(dumbledore, albusses.get(0));
     }
@@ -64,6 +64,8 @@ public class HighScorePlayerFinderTest {
     public final void thePottersArePresent() {
         List<Player> potters = highscores.findPlayer(null, "Potter");
 
+        System.out.print("potters" + potters);
+        
         assertEquals(3, potters.size());
         assertTrue(potters.contains(harry));
         assertTrue(potters.contains(james));
