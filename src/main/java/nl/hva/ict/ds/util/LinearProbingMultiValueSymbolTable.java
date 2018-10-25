@@ -1,22 +1,89 @@
 package nl.hva.ict.ds.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import nl.hva.ict.ds.Player;
 
 import java.util.List;
 
 public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable<String, Player> {
+    
+    private int maxArraySize, currentArraySize;
+    
+    private String[] keys;
+    //private List<Player> values = new ArrayList<Player>(100);
+    private List<Player> values;
+    
     public LinearProbingMultiValueSymbolTable(int arraySize) {
+        this.currentArraySize = 0;
+        maxArraySize = arraySize;
+        keys = new String[maxArraySize];
+        values = Arrays.asList(new Player[maxArraySize]);
+        
     }
 
     @Override
     public void put(String key, Player value) {
-        
-        
 
+        int hash = hash(key);
+        
+        System.out.println("Key: " + key);
+        System.out.println("Hash: " + hash);
+        System.out.println("--------------");
+        
+        // If the index is available/null put the player in that index.
+        // If not keep searching in the list until we find an empty spot
+        if(values.get(hash) == null) {
+            
+            keys[hash] = key;
+            values.set(hash, value);
+            
+        } else {
+ 
+            int emptyIndex = hash;
+            while(values.get(emptyIndex) != null){
+                emptyIndex++;
+            }
+
+            keys[emptyIndex] = key;
+            values.set(emptyIndex, value);
+            
+        }
+        
+        currentArraySize++;
+        
+        System.out.println(values);
+        
+        
     }
-
+    
     @Override
     public List<Player> get(String key) {
-        return null;
+       
+        List<Player> list = new ArrayList<>();
+               
+        for (int i = hash(key); keys[i] != null; i = (i + 1) % maxArraySize) {
+         
+            if (keys[i].equals(key)) {
+                list.add(values.get(i));
+            }
+            
+        }
+
+        System.out.println("Get list: " + list);
+        
+        return list;
+        
     }
+   
+    private int hash(String key) {
+        
+        return Math.abs(key.hashCode() % maxArraySize); 
+    }
+    
+    private int size() {
+        return currentArraySize;
+    }
+
 }
