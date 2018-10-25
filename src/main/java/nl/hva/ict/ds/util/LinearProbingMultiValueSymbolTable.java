@@ -14,6 +14,7 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
     private String[] keys;
     //private List<Player> values = new ArrayList<Player>(100);
     private List<Player> values;
+    private int collisionCount = 0;
     
     public LinearProbingMultiValueSymbolTable(int arraySize) {
         this.currentArraySize = 0;
@@ -27,11 +28,7 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
     public void put(String key, Player value) {
 
         int hash = hash(key);
-        
-        System.out.println("Key: " + key);
-        System.out.println("Hash: " + hash);
-        System.out.println("--------------");
-        
+  
         // If the index is available/null put the player in that index.
         // If not keep searching in the list until we find an empty spot
         if(values.get(hash) == null) {
@@ -40,6 +37,8 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
             values.set(hash, value);
             
         } else {
+            
+            collisionCount++;
  
             int emptyIndex = hash;
             while(values.get(emptyIndex) != null){
@@ -53,8 +52,8 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
         
         currentArraySize++;
         
-        System.out.println(values);
-        
+        //System.out.println(values);     
+        System.out.println("Collisions: " + collisionCount);        
         
     }
     
