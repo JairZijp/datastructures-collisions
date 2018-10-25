@@ -41,7 +41,6 @@ public class HighScorePlayerFinderTest {
         nearlyHeadlessNick = new Player("Nicholas", "de Mimsy-Porpington", 95);
         dumbledore = new Player("Albus", "Dumbledore", nearlyHeadlessNick.getHighScore() * 1000);
         harry = new Player("Harry", "Potter", dumbledore.getHighScore() + 1000);
-        harry2 = new Player("Harry", "Potter", dumbledore.getHighScore() + 1000);
         james = new Player("James", "Potter", harry.getHighScore() - 4000);
         lily = new Player("Lily", "Potter", harry.getHighScore() - 4000);
         voldemort = new Player("polygene", "lubricants", harry.getHighScore() - 10);
@@ -49,7 +48,6 @@ public class HighScorePlayerFinderTest {
         highscores.add(nearlyHeadlessNick);
         highscores.add(dumbledore);
         highscores.add(harry);
-        highscores.add(harry2);
         highscores.add(james);
         highscores.add(lily);
         highscores.add(voldemort);
@@ -63,14 +61,6 @@ public class HighScorePlayerFinderTest {
         assertEquals(dumbledore, albusses.get(0));
     }
     
-    @Test
-    public final void linearTest() {
-        List<Player> harrys = highscores.findPlayer("Harry", null);
-        
-        assertEquals(2, harrys.size());
-        assertEquals(harry2, harrys.get(1));
-    }
-
     @Test
     public final void thePottersArePresent() {
         System.out.print(highscores);
@@ -90,18 +80,18 @@ public class HighScorePlayerFinderTest {
         assertEquals(nearlyHeadlessNick, headless.get(0));
     }
 
-    @Test
-    public void collisionsShouldHappen() {
-        String [] firstNames = new NameReader("/firstnames.txt").getNames();
-        String [] lastNames = new NameReader("/lastnames.txt").getNames();
-
-        highscores = new HighScorePlayerFinder(10501); // Please adjust this size!
-        for (int i = 0; i < 10000; i++) {
-            String firstName = firstNames[randomizer.nextInt(firstNames.length)];
-            String lastName = lastNames[randomizer.nextInt(lastNames.length)];
-            highscores.add(new Player(firstName, lastName, randomizer.nextInt(1000)));
-        }
-    }
-    
+//    @Test
+//    public void collisionsShouldHappen() {
+//        String [] firstNames = new NameReader("/firstnames.txt").getNames();
+//        String [] lastNames = new NameReader("/lastnames.txt").getNames();
+//
+//        highscores = new HighScorePlayerFinder(10501); // Please adjust this size!
+//        for (int i = 0; i < 10000; i++) {
+//            String firstName = firstNames[randomizer.nextInt(firstNames.length)];
+//            String lastName = lastNames[randomizer.nextInt(lastNames.length)];
+//            highscores.add(new Player(firstName, lastName, randomizer.nextInt(1000)));
+//        }
+//    }
+//    
 
 }

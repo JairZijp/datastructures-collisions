@@ -25,57 +25,61 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
 
     @Override
     public void put(String key, Player value) {
-   
-          int tmp = hash(key);
-        System.out.println("HASH: " + tmp);
-//        System.out.println("hash: " + hash);
-        System.out.println("Firstname: " + key);
-  //      System.out.println("value: " + value);
-       
-        int i = tmp;
-        do
-        {
-            if (keys[i] == null)
-            {
-                keys[i] = key;
-                values.set(i, value); 
-                currentArraySize++;
-                return;
+
+        int hash = hash(key);
+        
+        System.out.println("Key: " + key);
+        System.out.println("Hash: " + hash);
+        System.out.println("--------------");
+        
+        // If the index is available/null put the player in that index.
+        // If not keep searching in the list until we find an empty spot
+        if(values.get(hash) == null) {
+            
+            keys[hash] = key;
+            values.set(hash, value);
+            
+        } else {
+ 
+            int emptyIndex = hash;
+            while(values.get(emptyIndex) != null){
+                emptyIndex++;
             }
-            if (keys[i].equals(key)) 
-            { 
-                // TODO: handle if the same hash
-                System.out.println("Ja dezelfde!");
-                values.set(i, value); 
-                return; 
-            }            
-            i = (i + 1) % maxArraySize;            
-        } while (i != tmp);       
-       
+
+            keys[emptyIndex] = key;
+            values.set(emptyIndex, value);
+            
+        }
+        
+        currentArraySize++;
+        
+        System.out.println(values);
+        
+        
     }
     
     @Override
     public List<Player> get(String key) {
-        
-        System.out.println(values);
-        
-        System.out.println("key: " + key);
        
         List<Player> list = new ArrayList<>();
                
-        for (int i = hash(key); keys[i] != null; i = (i + 1) % maxArraySize) 
-            if (keys[i].equals(key))
+        for (int i = hash(key); keys[i] != null; i = (i + 1) % maxArraySize) {
+         
+            if (keys[i].equals(key)) {
                 list.add(values.get(i));
-        
-        System.out.println(list);
-        
+            }
+            
+        }
+
+        System.out.println("Get list: " + list);
         
         return list;
         
     }
-    
+   
     private int hash(String key) {
-        return key.hashCode() % maxArraySize; 
+        
+        return Math.abs(key.hashCode() % maxArraySize); 
     }
     
     private int size() {
