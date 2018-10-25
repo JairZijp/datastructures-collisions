@@ -29,14 +29,13 @@ public class HighScorePlayerFinderTest {
     Player nearlyHeadlessNick;
     Player dumbledore;
     Player harry;
-    Player harry2;
     Player james;
     Player lily;
     Player voldemort;
 
     @Before
     public final void setup() {
-        highscores = new HighScorePlayerFinder(8);
+        highscores = new HighScorePlayerFinder(7);
 
         nearlyHeadlessNick = new Player("Nicholas", "de Mimsy-Porpington", 95);
         dumbledore = new Player("Albus", "Dumbledore", nearlyHeadlessNick.getHighScore() * 1000);
@@ -91,6 +90,7 @@ public class HighScorePlayerFinderTest {
             String lastName = lastNames[randomizer.nextInt(lastNames.length)];
             highscores.add(new Player(firstName, lastName, randomizer.nextInt(1000)));
         }
+        
     }
     
 
