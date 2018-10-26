@@ -52,6 +52,24 @@ public class ExtendedPlayerFinderTest extends HighScorePlayerFinderTest {
 
         assertEquals(2, headless.size());
     }
+    
+    @Test
+    public final void findNoneExistingFullname() {
+        List<Player> list = highscores2.findPlayer("Jair", "Zijp");
+        assertEquals(0, list.size());
+    }
+    
+    @Test
+    public final void findNoneExistingFirstname() {
+        List<Player> list = highscores2.findPlayer("Jair", null);
+        assertEquals(0, list.size());
+    }
+    
+    @Test
+    public final void findNoneExistingLastname() {
+        List<Player> list = highscores2.findPlayer(null, "Zijp");
+        assertEquals(0, list.size());
+    }
 
     
 }

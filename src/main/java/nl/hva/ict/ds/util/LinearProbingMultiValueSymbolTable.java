@@ -51,10 +51,7 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
             values.set(emptyIndex, value);            
         }
         
-        currentArraySize++;
-        
-        //System.out.println(values);     
-        //System.out.println("Collisions: " + collisionCount);        
+        currentArraySize++;       
         
     }
     
@@ -80,8 +77,7 @@ public class LinearProbingMultiValueSymbolTable implements MultiValueSymbolTable
         
     }
    
-    private int hash(String key) {
-        
+    private int hash(String key) {  
         return Math.abs(key.hashCode() % maxArraySize); 
     }
     
