@@ -78,9 +78,9 @@ public class DoubleHashingMultiValueSymbolTable implements MultiValueSymbolTable
         return Math.abs(key.hashCode() % maxArraySize); 
     }
     
-    public int hash2(String key) {
+    private int hash2(String key) {
         return Math.abs(6 - key.hashCode() % 6);
-      }
+    }
     
     private int size() {
         return currentArraySize;
